@@ -11,6 +11,7 @@ module Savon
       @wsse_auth      = locals[:wsse_auth].nil? ? globals[:wsse_auth] : locals[:wsse_auth]
       @wsse_timestamp = locals[:wsse_timestamp].nil? ? globals[:wsse_timestamp] : locals[:wsse_timestamp]
       @wsse_signature = locals[:wsse_signature].nil? ? globals[:wsse_signature] : locals[:wsse_signature]
+      @wsse_session   = locals[:wsse_session].nil? ? globals[:wsse_session] : locals[:wsse_session]
 
       @global_header  = globals[:soap_header]
       @local_header   = locals[:soap_header]
@@ -22,7 +23,7 @@ module Savon
     end
 
     attr_reader :local_header, :global_header, :gyoku_options,
-                :wsse_auth, :wsse_timestamp, :wsse_signature
+                :wsse_auth, :wsse_timestamp, :wsse_signature, :wsse_session
 
     def empty?
       @header.empty?
@@ -82,6 +83,8 @@ module Savon
       wsse = Akami.wsse
       wsse.credentials(*wsse_auth) if wsse_auth
       wsse.timestamp = wsse_timestamp if wsse_timestamp
+      wsse.session = wsse_session if wsse_session
+
       if wsse_signature && wsse_signature.have_document?
         wsse.signature = wsse_signature
       end
