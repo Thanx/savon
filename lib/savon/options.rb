@@ -64,6 +64,10 @@ module Savon
     def wsse_signature(signature)
       @options[:wsse_signature] = signature
     end
+
+    def wsse_session(session)
+      @options[:wsse_session] = session
+    end
   end
 
   class GlobalOptions < Options
